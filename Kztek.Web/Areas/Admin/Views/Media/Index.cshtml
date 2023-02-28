@@ -1,0 +1,180 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Model.Models
+@using Kztek.Model.CustomModel
+@model Media
+@{
+	ViewBag.Title = "Quản lý đa phương tiện";
+	string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+	var paramHeader = (ListPagingModel)ViewBag.ParamHeader;
+}
+<div class="page-header">
+	<h1 class="no-margin">
+		@ViewBag.Title
+	</h1>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Index", "Media", FormMethod.Get))
+    {
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 divboxmd">
+            <input type="text" name="key" value="@paramHeader.keyword" placeholder="Từ khóa..." class="form-control" />
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 divboxmd">
+            @Html.DropDownList("mediaPage", new SelectList(ViewBag.PageSelectLst, "ItemValue", "ItemText", ViewBag.mediaPage), "--Lựa chọn--", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 divboxmd">
+            @Html.DropDownList("position", new SelectList(ViewBag.PositionSelectLst, "ItemValue", "ItemText", ViewBag.position), "--Lựa chọn--", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12 divboxmd">
+            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm</button>
+            <a href="@Url.Action("Index", "Media")" class="btn btn-sm btn-purple" type="submit">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Reset
+            </a>
+        </div>
+
+    }
+</div>
+<div class="hr hr-18 dotted hr-24"></div>
+<div class="row">
+	<div class="col-xs-12">
+		@Html.Action("Actions", "Home", new { ActionName = "Create", ControllerName = controller })
+	</div>
+</div>
+<div class="hr hr-18 dotted hr-24"></div>
+<div class="row">
+	<div class="col-xs-12" style="overflow-x: auto;">
+<!--List table-->
+<div class="row divPadding">
+	<div class="tblHeader clearfix">
+		<div class="col-xs-12">
+			<table class="table table-bordered table-hover" role="grid">
+                <colgroup>
+                    <col style="width:3% ">
+                    <col style="width:3% ">
+                    <col style="width:10% ">
+                    <col>
+                    <col  style="width:10% ">
+                    <col style="width:10% ">
+                    <col style="width:10% ">
+                    <col style='display:none;'>
+                    <col style='display:none;'>
+                    <col style='display:none;'>
+                    <col style='display:none;'>
+                    <col style='display:none;'>
+                    <col style='display:none;'>
+                    <col style="width:15% ">
+                    <col style="width:15% ">
+                    <col style="width:10% ">
+                </colgroup>
+		<thead>
+            <tr>
+                <th class="center">
+                    <span style='padding-right:0;'><i class="fa fa-bars"></i></span>
+                </th>
+                <th class="center">
+                    <label>
+                        <input type="checkbox" id="chkAllHeader" class="ace"><span class="lbl"></span>
+                    </label>
+                    <input id="hidListCheckbox" name="hidListCheckbox" type="hidden" value="">
+                </th>
+                <th scope="col" data-field="Id" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Id)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Name" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Name)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Description" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.Description)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Alt" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.Alt)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Url" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.Url)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Path" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Path)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Page" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Page)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Position" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Position)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="MediaType" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.MediaType)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="TotalView" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.TotalView)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Ordering" data-sort="asc" style='display:none;'><a href="javascript: void(0)">@Html.LabelFor(m => m.Ordering)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="DateCreated" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.DateCreated)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col" data-field="Active" data-sort="asc"><a href="javascript: void(0)">@Html.LabelFor(m => m.Active)<i class="fa fa-ellipsis-v"></i></a></th>
+                <th scope="col"><a href="javascript: void(0)"><label>Thao tác</label><i class="fa fa-ellipsis-v"></i></a></th>
+            </tr>
+		</thead>
+			</table>
+		</div>
+</div>
+	<div class="tblTablList clearfix" id="divPadding">
+		@Html.Action("Media_PagingList", "Media", new { model = paramHeader, mediaPage = ViewBag.mediaPage, position = ViewBag.position })
+		</div>
+	</div>
+	</div>
+</div>
+@section scripts{
+<script>
+	$(document).ready(function () {
+	DeleteSubmit('@Url.Action("Delete","Media")');
+		$('body').on('click', '.tblHeader .table tr th a', function () {
+			var cmd = $(this);
+			var _field = cmd.parent().attr('data-field');
+			var _sort = cmd.parent().attr('data-sort');
+			var _filter = _field + '=' + _sort;
+			var model = {
+					keyword: '@paramHeader.keyword',
+					page: '@paramHeader.page',
+				pageSize: '@paramHeader.pageSize',
+				filter: _filter
+			};
+			LoadListPaging(model);
+				cmd.find('i').removeClass('fa-ellipsis-v');
+				cmd.find('i').removeClass('fa-sort-amount-asc');
+				cmd.find('i').removeClass('fa-sort-amount-desc');
+			if (_sort == 'asc') {
+				cmd.parent().attr('data-sort', 'desc');
+				cmd.find('i').addClass("fa-sort-amount-asc");
+			} else {
+				cmd.parent().attr('data-sort', 'asc');
+			cmd.find('i').addClass("fa-sort-amount-desc");
+		}
+});
+$('body').on('click', '#AjaxPaging .pagination li a', function () {
+	var cmd = $(this);
+	var _page = cmd.attr('idata');
+	var ps = $('.cssPagingSelect').val();
+	if (ps == null || ps == '') {
+		ps = '@paramHeader.pageSize';
+	}
+	if (_page != undefined && _page != '') {
+		var model = {
+		keyword: '@paramHeader.keyword',
+		page: _page,
+		pageSize: ps,
+		filter: '@paramHeader.filter'
+	};
+	LoadListPaging(model);
+	}
+	return false;
+});
+//Event change pageSize
+$('body').on('change', '.cssPagingSelect', function () {
+	var cmd = $(this);
+	var _val = cmd.val();
+	var model = {
+	keyword: '@paramHeader.keyword',
+	page: '@paramHeader.page',
+	pageSize: _val,
+	filter: '@paramHeader.filter'
+	};
+	LoadListPaging(model);
+	cmd.find('option').removeAttr('selected');
+	});
+});
+function LoadListPaging(model) {
+	$.ajax({
+	url: '@Url.Action("Media_PagingList", "Media")',
+	data: model,
+	type: 'POST',
+	success: function (data) {
+	if (data != null && data != '') {
+	$('#divPadding').html(data)
+	}
+	}
+	});
+	}
+	</script>
+}

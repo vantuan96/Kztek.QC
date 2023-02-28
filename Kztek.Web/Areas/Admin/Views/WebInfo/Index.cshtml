@@ -1,0 +1,247 @@
+﻿@using Kztek.Web.Core.Extensions
+
+@model Kztek.Model.Models.WebInfo
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <h1>
+        Cấu hình
+    </h1>
+</div>
+
+<div class="row">
+    @if (ViewBag.Message != null)
+    {
+        <strong style="color:orange">@ViewBag.Message</strong>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <strong style="color:forestgreen">@TempData["Success"]</strong>
+    }
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Index", "WebInfo", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form" }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Tên website </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.WebsiteName, new { @class = "form-control", @placeholder = "Tên website" })
+                    @Html.ValidationMessageFor(n => n.WebsiteName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Meta title </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.MetaTitle, new { @class = "form-control", @placeholder = "Meta title" })
+                    @Html.ValidationMessageFor(n => n.MetaTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Meta keywork </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.MetaKeywork, new { @class = "form-control", @placeholder = "Meta keywork" })
+                    @Html.ValidationMessageFor(n => n.MetaKeywork, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Meta description </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.MetaDesc, new { @class = "form-control", @placeholder = "Meta description" })
+                    @Html.ValidationMessageFor(n => n.MetaDesc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Bản ghi / trang frontend </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.PagingFontEnd, new { @class = "form-control", @placeholder = "Bản ghi / trang font end" })
+                    @Html.ValidationMessageFor(n => n.PagingFontEnd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Bản ghi / trang backend </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.PagingBackEnd, new { @class = "form-control", @placeholder = "Bản ghi / trang backend" })
+                    @Html.ValidationMessageFor(n => n.PagingBackEnd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Email gửi thông tin </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.EmailSystem, new { @class = "form-control", @placeholder = "Email gửi thông tin" })
+                    @Html.ValidationMessageFor(n => n.EmailSystem, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Mật khẩu email gửi thông tin </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.EmailPassSystem, new { @class = "form-control", @placeholder = "Mật khẩu email gửi thông tin" })
+                    @Html.ValidationMessageFor(n => n.EmailPassSystem, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Số điện thoại </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Phone, new { @class = "form-control", @placeholder = "Số điện thoại" })
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Bcc cho ai </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.EmailBcc, new { @class = "form-control", @placeholder = "Bcc cho ai. Dùng dấu ',' để ngăn cách các email" })
+                    @Html.ValidationMessageFor(n => n.EmailBcc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Cc cho ai </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.EmailCC, new { @class = "form-control", @placeholder = "Cc cho ai. Dùng dấu ',' để ngăn cách" })
+                    @Html.ValidationMessageFor(n => n.EmailCC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> MasterToolCode </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.MasterToolCode, new { @class = "form-control", @placeholder = "MasterToolCode" })
+                    @Html.ValidationMessageFor(n => n.MasterToolCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> AnalyticsCode </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.AnalyticsCode, new { @class = "form-control", @placeholder = "AnalyticsCode" })
+                    @Html.ValidationMessageFor(n => n.AnalyticsCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> LinkGoogleMap </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.LinkGoogleMap, new { @class = "form-control", @placeholder = "LinkGoogleMap" })
+                    @Html.ValidationMessageFor(n => n.LinkGoogleMap, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> FaceBookCode </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.FaceBookCode, new { @class = "form-control", @placeholder = "FaceBookCode" })
+                    @Html.ValidationMessageFor(n => n.FaceBookCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> FanpageUrl </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.FanpageUrl, new { @class = "form-control", @placeholder = "FaceBookCode" })
+                    @Html.ValidationMessageFor(n => n.FanpageUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> ChatCode </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.ChatCode, new { @class = "form-control", @placeholder = "ChatCode" })
+                    @Html.ValidationMessageFor(n => n.ChatCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right" for="form-field-4">Upload ảnh</label>
+                <div class="col-sm-6 col-xs-12 btn-group">
+                    @Html.TextBoxFor(c => c.LogoPath, new { @class = "form-control" })
+                </div>
+                <input type="button" id="Browse" value="Browse..." class="btn btn-default" style="height:33px; line-height:15px;" onclick="Open()">
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-6">
+                    @if (!string.IsNullOrWhiteSpace(Model.LogoPath))
+                    {
+                        <img src="@Model.LogoPath" width="120" height="100" />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right" for="form-field-4">Link</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(c => c.LogoUrl, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> CompanyInfo </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.CompanyInfo, new { @class = "form-control", @placeholder = "CompanyInfo" })
+                    @Html.ValidationMessageFor(n => n.CompanyInfo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Footer </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.Footer, new { @class = "form-control", @placeholder = "Footer" })
+                    @Html.ValidationMessageFor(n => n.Footer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-4 col-md-8 input-group">
+                    <button class="btn btn-info" type="submit">
+                        <i class="ace-icon fa fa-save bigger-110"></i>
+                        Lưu
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Nhập lại
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/editors/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/editors/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace("CompanyInfo");
+    </script>
+    <script type="text/javascript">
+        CKEDITOR.replace("Footer");
+        CKEDITOR.dtd.$removeEmpty['i'] = false;
+    </script>
+    <script>
+        function Open() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $('#LogoPath').val(fileUrl);
+                $('#blah').css('display', 'block');
+                $('#blah').attr('src', fileUrl);
+                $('#blah').attr('width', 200);
+            };
+            finder.popup();
+        }
+
+        $(document).ready(function () {
+
+        });
+    </script>
+}
+

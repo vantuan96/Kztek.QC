@@ -1,0 +1,135 @@
+﻿@using Kztek.Model.Models
+@model Kztek.Model.Models.ContentNews
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+  
+}
+@section headerMeta{
+    <meta name="description" content="@Model.MetaDesc">
+    <meta name="keywords" content="@Model.MetaKeyword">
+    <meta name="title" content="@Model.MetaTitle">
+
+    <meta property="og:url" content="@Model.OGUrl" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@Model.OGTitle" />
+    <meta property="og:description" content="@Model.OGDescription" />
+    <meta property="og:image" content="@Model.OGImage" />
+}
+@if (Model != null && Model.objNews != null)
+{
+    <!-- Blog Details Area Start -->
+    <section class="akame-blog-details-area section-padding-80">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <a href="#" class="post-date"><i class="icon_clock_alt"></i> @Model.objNews.DateCreated.ToString("dd/MM/yyyy")</a>
+                            @*<a href="#" class="post-comments"><i class="icon_chat_alt"></i> 10</a>*@
+                        </div>
+                        <h2 class="post-title">@Model.objNews.Name</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="post-thumbnail mb-50">
+                        <img src="@Model.objNews.DetailPath" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-2 col-md-2 col-lg-1">
+                    <!-- Post Share -->
+                    <div class="akame-post-share">
+                        <a href="#" data-toggle="tooltip" data-placement="left" title="Facebook" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" data-toggle="tooltip" data-placement="left" title="Twitter" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" data-toggle="tooltip" data-placement="left" title="Google Plus" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                        <a href="#" data-toggle="tooltip" data-placement="left" title="Instagram" class="instagram"><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-10 col-lg-9">
+                    @if (!string.IsNullOrEmpty(Model.objNews.Description))
+                    {
+                        @Html.Raw(Model.objNews.Description)
+                    }
+
+                    <!-- Post Author Area -->
+                    @*<div class="post-author-area d-flex align-items-center justify-content-between">
+                            <!-- Author Meta -->
+                            <div class="author-meta d-flex align-items-center">
+                                <div class="author-avatar">
+                                    <img src="img/bg-img/43.jpg" alt="">
+                                </div>
+                                <div class="author-text">
+                                    <p>Gusest Writer</p>
+                                    <h5>John Smith</h5>
+                                </div>
+                            </div>
+
+                            <!-- Author Social Info -->
+                            <div class="author-social-info">
+                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                            </div>
+                        </div>*@
+
+                    <!-- Leave A Reply -->
+                    @Html.Action("Partial_Comment", "News", new { id = Model.objNews.Id })
+                </div>
+            </div>
+        </div>
+    </section>
+    if (Model.ListHot != null && Model.ListHot.Count > 0)
+    {
+        <!-- Blog Details Area End -->
+        <!-- Related News Area Start -->
+        <section class="akame-blog-area bg-gray section-padding-80-0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <!-- Section Heading -->
+                    <div class="col-12">
+                        <div class="section-heading text-center">
+                            <h2>Tin mới nhất</h2>
+                            @*<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @foreach (var item in Model.ListHot)
+                    {
+                        <!-- Single Post Area -->
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="single-post-area mb-80">
+                                <div class="post-thumbnail">
+                                    <a href="@Url.Action("Detail", "Service", new { title = item.NameUrl, newcategory = (Model != null ? Model.ServiceCategoryTitle : "")})"><img src="@item.CoverPath" alt=""></a>
+                                </div>
+                                <div class="post-content">
+                                    <a href="@Url.Action("Detail", "Service", new { title = item.NameUrl, newcategory = (Model != null ? Model.ServiceCategoryTitle : "")})" class="post-title">@item.Name</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date"><i class="icon_clock_alt"></i> @item.DateCreated.ToString("dd/MM/yyyy")</a>
+                                        @*<a href="#" class="post-comments"><i class="icon_chat_alt"></i> 10</a>*@
+                                    </div>
+                                    <p>@item.Summary</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+
+
+                </div>
+            </div>
+        </section>
+        <!-- Related News Area End -->
+    }
+
+}

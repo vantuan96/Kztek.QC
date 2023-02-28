@@ -1,0 +1,81 @@
+﻿@using Kztek.Model.Models
+@using Kztek.Model.CustomModel
+@model List<Product>
+@{
+    ViewBag.Title = "Liên hệ";
+    int count = 0;
+}
+
+<!-- Breadcrumb Area Start -->
+<section class="breadcrumb-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2>Thiết bị hệ thống</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="icon_house_alt"></i> Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Product</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<!-- Breadcrumb Area End -->
+<!-- Service Area Start -->
+<section class="akame-service-area">
+
+    @foreach (var item in Model)
+    {
+        if (count % 2 == 0)
+        {
+            <div class="single--service--item d-flex flex-wrap align-items-center">
+                <!-- Service Content -->
+                <div class="service-content" style="padding:0px 50px">
+                    <div class="service-text">
+                        <h2>@item.Name</h2>
+                        <span>@Html.Raw(@item.Summary))</span>
+                        @*<p><span>Men's Haircut:</span> <span>$75+</span></p>
+                            <p><span>Up Do Style:</span> <span>$35+</span></p>
+                            <p><span>Half-up do style:</span> <span>$45+</span></p>*@
+                        <div class="col-xs-12">
+                            <a class="btn akame-btn active mt-30" href="@Url.Action("View","Product",new {id = item.Id })">Xem thêm</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Service Thumbnail -->
+                <div class="service-thumbnail bg-img jarallax" style="background-image: url(@item.CorverPath);"></div>
+            </div>
+
+            <!-- Single Service Item -->
+        }
+        else
+        {
+            <!-- Single Service Item -->
+            <div class="single--service--item odd-item d-flex flex-wrap align-items-center">
+                <!-- Service Thumbnail -->
+                <div class="service-thumbnail bg-img jarallax" style="background-image: url(@item.CorverPath);"></div>
+
+                <!-- Service Content -->
+                <div class="service-content" style="padding:0px 50px ">
+                    <div class="service-text">
+                        <h2>@item.Name</h2>
+                        <span>@Html.Raw(@item.Summary)</span>
+                        <div class="col-xs-12">
+                            <a class="btn akame-btn active mt-30" href="@Url.Action("View","Product",new {id = item.Id })">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        count++;
+    }
+
+</section>
+<!-- Service Area End -->

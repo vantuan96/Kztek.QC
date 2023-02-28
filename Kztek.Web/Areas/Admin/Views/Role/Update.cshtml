@@ -1,0 +1,95 @@
+﻿@model Kztek.Model.Models.Role
+
+@{
+    ViewBag.Title = "Cập nhật vai trò";
+
+    string selected = (string)ViewBag.Selected;
+}
+
+<div class="page-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</div>
+<div class="row">
+    @if (TempData["Success"] != null)
+    {
+        <strong style="color:green">@TempData["Success"]</strong>
+    }
+    <strong style="color:red">@ViewBag.Error</strong>
+</div>
+<div class="row">
+    <div class="col-md-7 col-xs-12">
+        <h3 class="header smaller lighter blue">Thông tin cơ bản</h3>
+        @using (Html.BeginForm("Update", "Role", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmUpdateRole" }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Tên vai trò <span style="color:red">*</span></label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.RoleName, new { @class = "form-control", @placeholder = "Tên vai trò" })
+                    @Html.ValidationMessageFor(n => n.RoleName, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(n => n.Id)
+                    @Html.Hidden("menufunctionvalues")
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Mô tả </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Description, new { @class = "form-control", @placeholder = "Mô tả" })
+                    @Html.ValidationMessageFor(n => n.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Kích hoạt </label>
+                <div class="col-sm-6">
+                    <label class="line-height-250">
+                        @Html.CheckBoxFor(n => n.Active, new { @class = "ace", @checked = "true" })
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+
+            @Html.Action("Buttons", "Home", new { controller = "Role", action = "Update", url = ViewBag.urlValue })
+        }
+    </div>
+    <div class="col-md-5 col-xs-12">
+        <h3 class="header smaller lighter blue">Danh mục hệ thống</h3>
+        <div style="overflow-y:scroll;height:400px;position:relative">
+            @Html.Action("MenuFunctionList", "Role", new { str = selected })
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".chkCheckBox").click(function () {
+                var cmd = $(this);
+                cmd.parent().parent().find('ul li input[type=checkbox]').prop('checked', cmd.is(':checked'));
+            });
+
+            $("span.liMenuFunction").click(function () {
+                var cmd = $(this);
+                cmd.parent().find('ul li span.liMenuFunction').parent().parent().fadeToggle();
+            });
+            $('#CountinueAndClose').click(function () {
+                $('#frmUpdateRole').submit();
+            });
+            $('#btnBackToHome').click(function () {
+                location.href = '/Admin/Role';
+            });
+            $("#frmUpdateRole").submit(function () {
+                var str = "";
+                $("input[name='chkCheckBox']").each(function () {
+                    var cmd = $(this);
+                    var id = cmd.prop("value");
+                    if ($(this).is(":checked")) {
+                        str = str + id + ",";
+                    }
+                });
+                $("#menufunctionvalues").val(str);
+            });
+        });
+    </script>
+}

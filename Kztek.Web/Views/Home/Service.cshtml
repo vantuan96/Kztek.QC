@@ -1,0 +1,34 @@
+﻿@model List<Kztek.Model.Models.News>
+
+@if (Model != null && Model.Count > 0)
+{
+    <!-- Our Service Area Start -->
+    <section class="akame-service-area section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center">
+                        <h2>Giải pháp</h2>
+                        @*<p>The House of Hair Salon &amp; Spa, incididunt ut labore et dolore magna aliqua.</p>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <!-- Single Service Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-service-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                            <img src="@item.CoverPath" alt="">
+                            <h5>@item.Name</h5>
+                            <p>@item.Summary</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+    <!-- Our Service Area End -->
+}

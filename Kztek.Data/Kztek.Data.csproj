@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9064C57C-4F60-4C54-BEF3-32BF8CA9D7D4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kztek.Data</RootNamespace>
+    <AssemblyName>Kztek.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Infrastructure\DatabaseFactory.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IDatabaseFactory.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\Page.cs" />
+    <Compile Include="Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="KztekEntities.cs" />
+    <Compile Include="Migrations\201905300207435_1.cs" />
+    <Compile Include="Migrations\201905300207435_1.Designer.cs">
+      <DependentUpon>201905300207435_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906040814427_2.cs" />
+    <Compile Include="Migrations\201906040814427_2.Designer.cs">
+      <DependentUpon>201906040814427_2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041025200_3.cs" />
+    <Compile Include="Migrations\201906041025200_3.Designer.cs">
+      <DependentUpon>201906041025200_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041059145_4.cs" />
+    <Compile Include="Migrations\201906041059145_4.Designer.cs">
+      <DependentUpon>201906041059145_4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041117316_5.cs" />
+    <Compile Include="Migrations\201906041117316_5.Designer.cs">
+      <DependentUpon>201906041117316_5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041119310_6.cs" />
+    <Compile Include="Migrations\201906041119310_6.Designer.cs">
+      <DependentUpon>201906041119310_6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041134066_7.cs" />
+    <Compile Include="Migrations\201906041134066_7.Designer.cs">
+      <DependentUpon>201906041134066_7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906041142582_8.cs" />
+    <Compile Include="Migrations\201906041142582_8.Designer.cs">
+      <DependentUpon>201906041142582_8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050121053_9.cs" />
+    <Compile Include="Migrations\201906050121053_9.Designer.cs">
+      <DependentUpon>201906050121053_9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050156226_10.cs" />
+    <Compile Include="Migrations\201906050156226_10.Designer.cs">
+      <DependentUpon>201906050156226_10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906050840031_11.cs" />
+    <Compile Include="Migrations\201906050840031_11.Designer.cs">
+      <DependentUpon>201906050840031_11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906060431310_12.cs" />
+    <Compile Include="Migrations\201906060431310_12.Designer.cs">
+      <DependentUpon>201906060431310_12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ContactRepository.cs" />
+    <Compile Include="Repository\CustomerCommentRepository.cs" />
+    <Compile Include="Repository\CustomerRepository.cs" />
+    <Compile Include="Repository\LogRepository.cs" />
+    <Compile Include="Repository\MainMenuRepository.cs" />
+    <Compile Include="Repository\MediaRepository.cs" />
+    <Compile Include="Repository\MenuFunctionRepository.cs" />
+    <Compile Include="Repository\NewsCategoryRepository.cs" />
+    <Compile Include="Repository\NewsRepository.cs" />
+    <Compile Include="Repository\ProductCategoryRepository.cs" />
+    <Compile Include="Repository\ProductRepository.cs" />
+    <Compile Include="Repository\RoleMenuRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\TrashRepository.cs" />
+    <Compile Include="Repository\UserConfigRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repository\UserRoleRepository.cs" />
+    <Compile Include="Repository\WebInfoRepository.cs" />
+    <Compile Include="SqlHelper\ExcuteSQL.cs" />
+    <Compile Include="SqlHelper\SqlExQuery.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Kztek.Core\Kztek.Core.csproj">
+      <Project>{2e108ce3-6e45-41f7-ad83-dd8f8888b2ab}</Project>
+      <Name>Kztek.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Kztek.Model\Kztek.Model.csproj">
+      <Project>{28cdc5f9-a2fa-4d76-bc82-2312c9760b09}</Project>
+      <Name>Kztek.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201905300207435_1.resx">
+      <DependentUpon>201905300207435_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906040814427_2.resx">
+      <DependentUpon>201906040814427_2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041059145_4.resx">
+      <DependentUpon>201906041059145_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041117316_5.resx">
+      <DependentUpon>201906041117316_5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041119310_6.resx">
+      <DependentUpon>201906041119310_6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041134066_7.resx">
+      <DependentUpon>201906041134066_7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906041142582_8.resx">
+      <DependentUpon>201906041142582_8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050121053_9.resx">
+      <DependentUpon>201906050121053_9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050156226_10.resx">
+      <DependentUpon>201906050156226_10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906050840031_11.resx">
+      <DependentUpon>201906050840031_11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906060431310_12.resx">
+      <DependentUpon>201906060431310_12.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

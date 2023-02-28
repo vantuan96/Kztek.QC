@@ -1,0 +1,12 @@
+﻿@model Kztek.Model.Models.WebInfo
+<footer class="footer-area section-padding-80-0">
+    <div class="container">
+        <div class="row justify-content-between">
+            @if (!string.IsNullOrEmpty(Model.Footer))
+            {
+                @Html.Raw(Model.Footer)
+            }
+         
+        </div>
+    </div>
+</footer>

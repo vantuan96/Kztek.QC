@@ -1,0 +1,196 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Web.Core.Extensions
+@using Kztek.Model.Models
+@model Customer
+@{
+    ViewBag.Title = "Cập nhập Khách hàng";
+    var _urlValue = (string)ViewBag.urlValue;
+}
+<div class="page-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</div>
+<div class="row">
+    @if (TempData["Success"] != null)
+    {
+        <strong style="color: green"> @TempData["Success"] </strong>
+    }
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Update", "Customer", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmUpdate" }))
+        {
+            @Html.ValidationMessage("", "", new { @class = "text-danger", @style = "font-size:18; " })
+            @Html.Hidden("SaveAndCountinue", false)
+            @Html.Hidden("urlValue", _urlValue)
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.DateCreated)
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.FullName)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.FullName, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.FullName, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Email)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Email, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Email, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Mobile)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Mobile, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Mobile, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Phone)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Phone, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Phone, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Address) </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.Address, new { @class = "form-control", @rows = "5", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Address, "", new { @class = "" })*@
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Gender) </label>
+                <div class="col-sm-4">
+                    <label class="line-height-250">
+                        <div class="control-group">
+                            <div class="radio" style="padding-top:0px">
+                                <label>
+                                    <input name="form-field-radio-sex" type="radio" class="ace" id="men" value= true>
+                                    <span class="lbl"> Nam </span>
+                                </label>
+                                <label>
+                                    <input name="form-field-radio-sex" type="radio" class="ace" id="girl" value= false>
+                                    <span class="lbl"> Nữ</span>
+                                </label>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(n => n.Gender, new { @class = "ace" })
+                        <span class="lbl"></span>
+                    </label>
+                    @*<label class="line-height-250">
+                            @Html.CheckBoxFor(n => n.Gender, new { @class = "ace", @checked = "true" })
+                            <span class="lbl"></span>
+                        </label>*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Website)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Website, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Website, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Avartar)</label>
+                <div class="col-sm-6 col-xs-12 center btn-group">
+                    @Html.TextBoxFor(c => c.Avartar, new { @class = "form-control" })
+                </div>
+                <input type="button" id="Browse" value="Browse..." class="btn btn-default" style="height:33px; line-height:15px;" onclick="OpenAvartar()">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-4"></label>
+                <div class="col-sm-7">
+                    <img id="blah_Avartar" src="@string.Format("{0}",Model!=null && !string.IsNullOrWhiteSpace(Model.Avartar)?Model.Avartar:"")" alt="" style="max-width:200px" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Country)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Country, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Country, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Description) </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.Description, new { @class = "form-control", @rows = "5", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Description, "", new { @class = "" })*@
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Active) </label>
+                <div class="col-sm-4">
+                    <label class="line-height-250">
+                        @Html.CheckBoxFor(n => n.Active, new { @class = "ace", @checked = "true" })
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+
+            @Html.Action("Buttons", "Home", new { controller = "Customer", action = "Update" })
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/editors/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/editors/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function () {
+        CKEDITOR.replaceClass = 'ckeditor';
+
+
+            if ($('#Gender').val() == 'True') {
+                $('#men').prop('checked', true)
+            }
+            else {
+                $('#girl').prop('checked', true)
+            }
+
+            var genderValue = $('input[name=form-field-radio-sex]:checked').val();
+            $('#Gender').val(genderValue);
+            $('input[name=form-field-radio-sex]').on('click', function () {
+                genderValue = $('input[name=form-field-radio-sex]:checked').val();
+                $('#Gender').val(genderValue)
+            });
+
+            $('#ac_85695777').addClass('open');
+            $('#ac_110443008').addClass('open active');
+			$('#CountinueAndClose').click(function() {
+                $('#SaveAndCountinue').val('false');
+            $('input[name=form-field-radio-sex]').on('change', function () {
+                    $('name=[Gender]').val($('input[name=form-field-radio-sex]:checked').val())
+             });
+				$('#frmUpdate').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '@_urlValue';
+			});
+	});
+    </script>
+    <script>
+        function OpenAvartar() {
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (fileUrl) {
+                $('#Avartar').val(fileUrl);
+                $('#blah_Avartar').css('display', 'block').attr('src', fileUrl).attr('width', 200);
+            };
+            finder.popup();
+        }
+    </script>
+}

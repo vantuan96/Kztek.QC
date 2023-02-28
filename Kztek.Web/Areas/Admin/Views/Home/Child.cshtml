@@ -1,0 +1,35 @@
+﻿@using Kztek.Model.Models
+@using Kztek.Web.Attributes
+@model List<MenuFunction>
+@{
+    var allMenu = (List<MenuFunction>)ViewBag.AllMenuPermisstion;
+    var ItemMenu = (MenuFunction)ViewBag.ItemMenu;
+
+}
+@if (Model.Any())
+{
+    <ul class="submenu">
+        @foreach (var item in Model)
+        {
+            var child = allMenu.Where(c => c.ParentId == item.Id && c.MenuType == "1").ToList();
+            <li class="@string.Format("{0}", (ItemMenu!=null &&!string.IsNullOrWhiteSpace(ItemMenu.Breadcrumb)&& ItemMenu.Breadcrumb.Contains(item.Breadcrumb)) ? "open active" : "")">
+                <a href="@string.Format("{0}",child.Any()?"javascript:void(0)": Url.Action(item.ActionName,item.ControllerName))" class="@string.Format("{0}",child.Any()?"dropdown-toggle":"")">
+                    <i class="menu-icon fa @item.Icon"></i>
+                    <span class="menu-text">
+                        @item.MenuName
+                    </span>
+                    @if (child.Any())
+                    {
+                        <b class="arrow fa fa-angle-down"></b>
+                    }
+                </a>
+                @if (child.Any())
+                {
+                    <b class="arrow"></b>
+                    @Html.Action("Child", "Home", new { itemMenu = ItemMenu, listMenu = child, AllMenu = allMenu })
+                }
+
+            </li>
+        }
+    </ul>
+}

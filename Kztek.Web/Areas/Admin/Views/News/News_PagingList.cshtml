@@ -1,0 +1,36 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Model.Models
+@using Kztek.Model.CustomModel
+@using Kztek.Web.Core.Extensions
+@model PageModel<News>
+<div class="col-xs-12">
+	@Html.Raw(Html.TableFor<News>
+		().Columns(column =>
+		{
+		column.Expression(p => p.Id).Title("Id").tdWidth("15");
+		//column.Expression(p => p.NewsCategoryId).Title("NewsCategoryId").tdWidth("10");
+		column.Expression(p => p.Name).Title("Name");
+		//column.Expression(p => p.NameUrl).Title("NameUrl").tdWidth("10");
+		//column.Expression(p => p.Summary).Title("Summary").tdWidth("10");
+		//column.Expression(p => p.MetaTitle).Title("MetaTitle").tdWidth("10");
+		//column.Expression(p => p.MetaDesc).Title("MetaDesc").tdWidth("10");
+		//column.Expression(p => p.MetaKeywork).Title("MetaKeywork").tdWidth("10");
+		//column.Expression(p => p.CoverPath).Title("CoverPath").tdWidth("10");
+		//column.Expression(p => p.TotalView).Title("TotalView").tdWidth("10");
+		//column.Expression(p => p.NewsType).Title("NewsType").tdWidth("10");
+		column.Expression(p => p.DateCreated).Title("DateCreated").tdWidth("15");
+		column.Expression(p => p.Active).Title("Active").tdWidth("15");
+		}).DataSource(Model.Data).ToHtmlUpdate("lpNews", "table table-bordered table-hover", Url.Action("Update/", "News",new { Id=string.Empty }), "", false)
+	)
+</div>
+<!--Pagging-->
+<div class="col-xs-12">
+	<div id="AjaxPaging">
+		@*GeneratePagingFooter*@
+		@Html.GeneratePagingFooterAjax(Model.TotalPage, Model.TotalItem, Model.PageIndex, Model.PageSize, "pagination", x => Url.Action("Index", "News", new
+		{
+			page = x,
+			key = ViewBag.Key,
+		}))
+	</div>
+</div>

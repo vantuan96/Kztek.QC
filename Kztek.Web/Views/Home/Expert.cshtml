@@ -1,0 +1,74 @@
+﻿@model List<Kztek.Model.Models.Customer>
+@{
+    var comment = (Kztek.Model.Models.CustomerComment)ViewBag.Comment;
+}
+
+@if (comment != null)
+{
+    <!-- Our Expert Area Start -->
+<section class="akame-our-expert-area section-padding-80-0">
+
+    <!-- Side Thumbnail -->
+    <div class="side-thumbnail" style="background-image: url(@comment.Avartar);"></div>
+
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-12 col-lg-6">
+                <!-- Section Heading -->
+                <div class="section-heading">
+                    <h2>Ý kiến khách hàng</h2>
+                    <p>
+                        @if (!string.IsNullOrEmpty(comment.Summary))
+                        {
+                            @Html.Raw(comment.Summary)
+                        }
+
+                    </p>
+                </div>
+                <!-- Our Certificate -->
+                <div class="our-certificate-area mb-60 d-flex align-items-center">
+                    <img src="/Templates/akame/img/core-img/certificate-1.png" alt="">
+                    <img src="/Templates/akame/img/core-img/certificate-2.png" alt="">
+                    <img src="/Templates/akame/img/core-img/certificate-3.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <!-- Single Team Member -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-team-member mb-80 wow fadeInUp" data-wow-delay="200ms">
+                            <div class="team-member-img">
+                                <img src="@item.Avartar" alt="">
+                                <!-- Social Info -->
+                                <div class="team-social-info d-flex align-items-center justify-content-center">
+                                    <div class="social-link">
+                                        <a href="@string.Format("mailto:{0}",item.Email)"><i class="fa fa-envelope"></i></a>
+                                        <a href="@string.Format("tel:{0}",item.Phone)"><i class="fa fa-phone"></i></a>                                   
+                                        <a href="@item.Website"><i class="fa fa-dribbble"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member-info">
+                                <h5>@item.FullName</h5>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+
+            </div>
+        </div>
+    }
+
+</section>
+    <!-- Our Expert Area End -->
+}

@@ -1,0 +1,85 @@
+﻿@model List<Kztek.Model.Models.Media>
+
+
+<!-- Breadcrumb Area Start -->
+<section class="breadcrumb-area section-padding-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2>Bộ sưu tập</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/"><i class="icon_house_alt"></i> Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Bộ sưu tập</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Area End -->
+<!-- Portfolio Area Start -->
+<section class="akame-portfolio section-padding-0-80 clearfix">
+    <div class="container">
+        @*<div class="row">
+                <div class="col-12">
+                    <div class="portfolio-menu text-center mb-50">
+                        <button class="btn active" data-filter="*">All</button>
+                        <button class="btn" data-filter=".haircuts">Haircuts</button>
+                        <button class="btn" data-filter=".coloring">Coloring</button>
+                        <button class="btn" data-filter=".barber">Barber</button>
+                        <button class="btn" data-filter=".shaving">Shaving</button>
+                        <button class="btn" data-filter=".hairstyle">Hairstyle</button>
+                        <button class="btn" data-filter=".massage">Massages</button>
+                    </div>
+                </div>
+            </div>*@
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row akame-portfolio-area">
+
+                @foreach (var item in Model)
+                {
+
+                    <!-- Single Portfolio Item -->
+                    <div class="col-12 col-sm-6 col-lg-4 akame-portfolio-item haircuts mb-30 wow fadeInUp" data-wow-delay="200ms">
+                        <div class="akame-portfolio-single-item">
+                            <img src="@item.Path" alt="">
+
+                            <!-- Overlay Content -->
+                            <div class="overlay-content d-flex align-items-center justify-content-center">
+                                <div class="overlay-text text-center">
+                                    <h4>@item.Name</h4>
+                                    <p>@item.Alt</p>
+                                </div>
+                            </div>
+
+                            <!-- Thumbnail Zoom -->
+                            <a href="@item.Path" class="thumbnail-zoom"><i class="icon_search"></i></a>
+                        </div>
+                    </div>
+
+
+
+                }
+            </div>
+
+        }
+
+
+        @*<div class="row">
+                <div class="col-12">
+                    <div class="view-all-btn mt-30 text-center">
+                        <a href="portfolio.html" class="btn akame-btn">View All Work</a>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</section>
+<!-- Portfolio Area End -->
+<!-- Border -->
+<div class="container">
+    <div class="border-top"></div>
+</div>

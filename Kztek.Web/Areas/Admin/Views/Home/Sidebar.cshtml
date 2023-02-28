@@ -1,0 +1,60 @@
+﻿@using Kztek.Model.Models
+@using Kztek.Web.Attributes
+
+@model List<MenuFunction>
+
+@{
+    var pageModel = (Kztek.Web.Models.PageNameModel)ViewBag.PageModel;
+}
+
+<script type="text/javascript">
+    try { ace.settings.loadState('sidebar') } catch (e) { }
+</script>
+
+<ul class="nav nav-list">
+    <li class="page_home">
+        <a href="@Url.Action("Index","Home")">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> Bàn làm việc </span>
+        </a>
+
+        <b class="arrow"></b>
+    </li>
+
+    @if (Model.Any())
+    {
+        var listParent = Model.Where(c => c.ParentId == "0" && c.MenuType == "1").ToList();
+        if (listParent.Any())
+        {
+            var activeMenu = Model.FirstOrDefault(n => n.ControllerName.Equals(pageModel.ControllerName) && n.ActionName.Equals(pageModel.ActionName));
+            foreach (var item in listParent)
+            {
+                var child = Model.Where(c => c.ParentId == item.Id).ToList();
+
+                <li class="@string.Format("{0}", (activeMenu!=null && !string.IsNullOrWhiteSpace(activeMenu.Breadcrumb) && activeMenu.Breadcrumb.Contains(item.Breadcrumb)) ? "open active" : "")">
+                    <a href="@string.Format("{0}",child.Any()?"javascript:void(0)": Url.Action(item.ActionName,item.ControllerName))" class="@string.Format("{0}",child.Any()?"dropdown-toggle":"")">
+                        <i class="menu-icon fa @item.Icon"></i>
+                        <span class="menu-text">
+                            @item.MenuName
+                        </span>
+                        @if (child.Any())
+                        {
+                            <b class="arrow fa fa-angle-down"></b>
+                        }
+                    </a>
+                    @if (child.Any())
+                    {
+                        <b class="arrow"></b>
+                        @Html.Action("Child", "Home", new { itemMenu = activeMenu, listMenu = child, AllMenu = Model })
+                    }
+                </li>
+            }
+        }
+
+
+    }
+</ul>
+
+<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+    <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+</div>

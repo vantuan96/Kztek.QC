@@ -1,0 +1,111 @@
+﻿@model List<Kztek.Model.Models.Media>
+
+@if (Model != null && Model.Count > 0)
+    {
+        int count = 0;
+        var listImage = Model.Where(n => n.MediaType == "0").ToList();
+        var objVideo = Model.FirstOrDefault(n => n.MediaType == "1");
+    <!-- Portfolio Area Start -->
+    <section class="akame-portfolio section-padding-80 clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Bộ sưu tập</h2>
+                        @*<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            @*<div class="row">
+                    <div class="col-12">
+                        <div class="portfolio-menu text-center mb-30">
+                            <button class="btn active" data-filter="*">All</button>
+                            <button class="btn" data-filter=".haircuts">Haircuts</button>
+                            <button class="btn" data-filter=".dye">Dye</button>
+                            <button class="btn" data-filter=".shave">Shave</button>
+                            <button class="btn" data-filter=".hairstyle">Hairstyle</button>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row akame-portfolio-area">
+                <!-- Single Portfolio Item -->
+                @foreach (var item in listImage)
+                {
+                    count++;
+                    if (count != 2)
+                    {
+                        <div class="col-12 col-sm-6 col-lg-3 akame-portfolio-item haircuts mb-30 wow fadeInUp" data-wow-delay="200ms">
+                            <div class="akame-portfolio-single-item">
+                                <img src="@item.Path" alt="">
+
+                                <!-- Overlay Content -->
+                                <div class="overlay-content d-flex align-items-center justify-content-center">
+                                    <div class="overlay-text text-center">
+                                        <h4>@item.Name</h4>
+                                        <p>@item.Alt</p>
+                                    </div>
+                                </div>
+
+                                <!-- Thumbnail Zoom -->
+                                <a href="@item.Path" class="thumbnail-zoom"><i class="icon_search"></i></a>
+                            </div>
+                        </div>
+                    }
+
+                    if (count == 2)
+                    {
+                        <div class="col-12 col-sm-6 akame-portfolio-item dye mb-30 wow fadeInUp" data-wow-delay="300ms">
+                            <div class="akame-portfolio-single-item">
+                                <img src="@objVideo.Path" alt="">
+
+                                <!-- Overlay Content -->
+                                <div class="overlay-content d-flex align-items-center justify-content-center">
+                                    <div class="overlay-text text-center">
+                                        <h4>@objVideo.Name</h4>
+                                        <p>@objVideo.Alt</p>
+                                    </div>
+                                </div>
+
+                                <!-- Thumbnail Zoom -->
+                                <a href="@objVideo.Path" class="thumbnail-zoom"><i class="icon_search"></i></a>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-3 akame-portfolio-item shave mb-30 wow fadeInUp" data-wow-delay="400ms">
+                            <div class="akame-portfolio-single-item">
+                                <img src="@item.Path" alt="">
+
+                                <!-- Overlay Content -->
+                                <div class="overlay-content d-flex align-items-center justify-content-center">
+                                    <div class="overlay-text text-center">
+                                        <h4>@item.Name</h4>
+                                        <p>@item.Alt</p>
+                                    </div>
+                                </div>
+
+                                <!-- Thumbnail Zoom -->
+                                <a href="@item.Path" class="thumbnail-zoom"><i class="icon_search"></i></a>
+                            </div>
+                        </div>
+
+                    }
+                }
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="view-all-btn mt-30 text-center">
+                        <a href="@Url.Action("Index", "Media")" class="btn akame-btn">Xem tất cả</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio Area End -->
+}

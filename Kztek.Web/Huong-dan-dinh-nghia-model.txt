@@ -1,0 +1,10 @@
+﻿//textarea: trường này là textarea
+//ckeditor: trường này là trình soạn thảo
+//maskdate: trường này có format sẵn dạng datetime
+//maskmoney: trường này có format sẵn là tiền tệ
+//image: trường này upload bằng ckfinder
+//upload: Trường này upload trực tiếp
+//ref-NewsCategory-Name: hiển thị droplist với bảng được liên kết
+//reftree-NewsCategory-Name: hiển thị list dạng tree với bảng được liên kết
+//hide: ẩn trường
+//funcname:tiêu đề hiển thị lên menufunction, dùng cho việc xuất dữ liệu menu

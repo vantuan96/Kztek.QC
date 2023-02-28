@@ -1,0 +1,166 @@
+﻿@using Kztek.Model.CustomModel
+@using Kztek.Web.Core.Extensions
+
+@model PageModel<Kztek.Model.Models.Log>
+
+@{
+    ViewBag.Title = "Nhật ký";
+    string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="page-header">
+    <h1>
+        Nhật ký hệ thống
+    </h1>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Index", "Log", FormMethod.Get, new { id = "frmLog" }))
+    {
+        <div class="col-md-4 col-xs-12 divboxmd">
+            Từ khóa:
+            <input type="text" name="key" value="@ViewBag.keyValue" placeholder="Từ khóa..." class="form-control" />
+        </div>
+        <div class="col-md-4 col-xs-12 divboxmd">
+            Từ ngày:
+            <div class="input-group">
+                @Html.TextBox("fromdate", (string)ViewBag.fromdateValue, new { @class = "form-control daterangtimepicker" })
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12 divboxmd">
+            Đến ngày:
+            <div class="input-group">
+                @Html.TextBox("todate", (string)ViewBag.todateValue, new { @class = "form-control daterangtimepicker" })
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2 col-xs-12 divboxmd">
+            <div class="control-label">
+                Thao tác:
+            </div>
+            <div>
+                @Html.Action("DroplistMultiSelectTemplate1", "CommonUse", new { _dt = ViewBag.actionList, itemValue = "ItemValue", itemText = "ItemText", selectedValues = ViewBag.actionsValue, Modelname = "ddlaction", labelName = "-- Lựa chọn --" })
+                @Html.Hidden("actions")
+            </div>
+        </div>
+        <div class="col-md-2 col-xs-12 divboxmd">
+            <div class="control-label">
+                Người dùng:
+            </div>
+            <div>
+                @Html.Action("DroplistMultiSelectTemplate1", "CommonUse", new { _dt = ViewBag.userList, itemValue = "Id", itemText = "Username", selectedValues = ViewBag.CardGroupId, Modelname = "ddluser", labelName = "-- Lựa chọn --" })
+                @Html.Hidden("users")
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12 divboxmd">
+            <div class="control-label">
+               &nbsp;
+            </div>
+            <div>
+                @Html.Action("Actions", "Home", new { ActionName = "Search", ControllerName = controller })
+
+                @Html.Action("Actions", "Home", new { ActionName = "Index", ControllerName = controller })
+            </div>
+        </div>
+    }
+</div>
+
+<div class="hr hr-18 dotted hr-24"></div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center">Tên người dùng</th>
+                    <th class="center">Action</th>
+                    <th class="center">Bảng</th>
+                    <th class="center">Đối tượng</th>
+                    <th class="center">Ngày tạo</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Data.Any())
+                {
+                    foreach (var item in Model.Data)
+                    {
+                        <tr>
+                            <td class="text-left">
+                                @item.UserName
+                            </td>
+
+                            <td class="text-left">
+                                @item.Action
+                            </td>
+
+                            <td class="text-left">
+                                @item.TableName
+                            </td>
+
+                            <td class="text-left">
+                                @item.ColumnId
+                            </td>
+
+                            <td class="center">
+                                @if (item.DateCreated != null)
+                                {
+                                    <span>@Convert.ToDateTime(item.DateCreated).ToString("dd/MM/yyyy HH:mm")</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div><!-- /.span -->
+
+    @if (Model.Data.Any())
+    {
+        <div class="col-xs-12">
+            <div class="pull-right">
+                @Html.GeneratePagingFooter(Model.TotalPage, Model.PageIndex, Model.PageSize, "pagination", x => Url.Action("Index", "Log", new
+           {
+               page = x,
+               key = ViewBag.keyValue,
+               fromdate = ViewBag.fromdateValue,
+               todate = ViewBag.todateValue,
+               actions = ViewBag.actionsValue,
+               users = ViewBag.usersValue
+           }))
+            </div>
+        </div>
+    }
+</div><!-- /.row -->
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            SearchSubmit("frmLog");
+
+            $('#ddlaction').change(function () {
+                var str = '';
+                var cmd = $(this);
+                cmd.parent().find('ul.multiselect-container li.active').each(function () {
+                    var _cmd = $(this);
+                    str += _cmd.find('input[type=checkbox]').val() + ',';
+                });
+                $('#actions').val(str);
+            });
+
+            $('#ddluser').change(function () {
+                var str = '';
+                var cmd = $(this);
+                cmd.parent().find('ul.multiselect-container li.active').each(function () {
+                    var _cmd = $(this);
+                    str += _cmd.find('input[type=checkbox]').val() + ',';
+                });
+                $('#users').val(str);
+            });
+        });
+    </script>
+}

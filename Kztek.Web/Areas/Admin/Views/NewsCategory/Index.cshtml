@@ -1,0 +1,110 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Web.Attributes
+@using Kztek.Model.Models
+@model List<NewsCategory>
+@{
+ViewBag.Title = "Danh mục tin";
+string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+<div class="page-header">
+	<h1>
+		Danh mục tin
+	</h1>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		@Html.Action("Actions", "Home", new { ActionName = "Create", ControllerName = controller })
+		@Html.Action("Actions", "Home", new { ActionName = "MultiDelete", ControllerName = controller })
+	</div>
+</div>
+<div class="hr hr-18 dotted hr-24"></div>
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<ul class="treeCustom">
+			@if (Model.Any())
+			{
+				var _count = 0;
+				var listParent = Model.Where(c => c.ParentId == "0").OrderBy(c => c.Ordering);
+				foreach (var item in listParent)
+				{
+				_count++;
+					var childItem = Model.Where(c => c.ParentId == item.Id).OrderBy(c => c.Ordering).ToList();
+					<li>
+						<label style="margin-bottom: 0px; ">
+							<input type="checkbox" name="chkCheckBox" id="chkCheckBox" value="@item.Id" class="ace chkCheckBox" />
+							<span class="lbl"></span>
+						</label>
+						<span class="liMenuFunction" style="font-weight: 700; color: #333;">
+							@if (item.Active)
+							{
+								<span>@item.Ordering</span> <span>. @item.Name</span>
+							}
+							else
+							{
+								<span style="text-decoration: line-through">
+								<span>@item.Ordering</span> <span>. @item.Name</span>
+								</span>
+							}
+						</span>
+						<span>
+						@{
+							CheckAuthorizeAction.Instance.CheckPemission(controller, "Update");
+							if (CheckAuthorizeAction.Instance.Check)
+							{
+								<a href="@Url.Action("Update", new { id = item.Id })">
+									<i class="ace-icon fa fa-pencil-square-o"></i>
+								</a>
+							}
+						}
+					</span>
+					@if (childItem.Any())
+					{
+						@Html.Action("Child", new { listChild = childItem, allFunction = Model })
+					}
+				</li>
+			}
+		}
+		</ul>
+	</div>
+</div>
+@section scripts{
+	<script>
+		$(document).ready(function () {
+			$(".chkCheckBox").click(function () {
+				var cmd = $(this);
+				cmd.parent().parent().find('ul li input[type=checkbox]').prop('checked', cmd.is(':checked'));
+			});
+			$("span.liMenuFunction").click(function () {
+				var cmd = $(this);
+				cmd.parent().find('ul li span.liMenuFunction').parent().parent().fadeToggle();
+			});
+			//Xóa nhiều bản ghi
+			$('.btnMultiDelete').click(function () {
+				var lstdeleteId = "";
+				$("input[name = 'chkCheckBox']:checked").each(function () {
+					var cmd = $(this);
+				lstdeleteId += cmd.val() + ',';
+			});
+				if (confirm('Bạn chắc chắn muốn xóa bản ghi này?')) {
+					//post danh sách ID
+					$.ajax({
+						type: "POST",
+						contentType: "application/json; charset = utf-8",
+						url: "/Admin/NewsCategory/MultiDelete",
+						data: "{ 'lstId':'" + lstdeleteId + "'}",
+						dataType: "json",
+						async: "false",
+						success: function (data) {
+							if (data.isSuccess) {
+								toastr.success(data.Message, 'Thông báo');
+								$("input[name = 'chkCheckBox']:checked").parent().parent().fadeOut();
+							} else {
+								toastr.error(data.Message, 'Thông báo lỗi');
+							}
+					}
+					});
+				}
+			});
+		});
+	 </script>
+}

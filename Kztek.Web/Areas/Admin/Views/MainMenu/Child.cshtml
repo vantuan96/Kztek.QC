@@ -1,0 +1,53 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Model.Models
+@using Kztek.Web.Attributes
+@model List<MainMenu>
+@{
+	var allList = (List<MainMenu>)ViewBag.allList;
+	string groupID = (string)ViewBag.GroupID;
+	string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (Model.Any())
+{
+var _count=0;
+	<ul class="submenufunction">
+		@foreach (var item in Model.OrderBy(n => n.Ordering))
+		{
+_count++;
+			var childItem = allList.Where(c => c.ParentId == item.Id).ToList();
+			<li>
+				<label style="margin-bottom: 0px; ">
+					<input type="checkbox" name="chkCheckBox" id="chkCheckBox" value="@item.Id" class="ace chkCheckBox" />
+					<span class="lbl"></span>
+				</label>
+					<span class="liMenuFunction" style="color: #666;">
+					@if (item.Active)
+					{
+						<span>@item.Ordering</span> <span>. @item.Name</span>
+					}
+					else
+					{
+						<span style="text-decoration:line-through">
+						<span>@item.Ordering</span> <span>. @item.Name</span>
+						</span>
+					}
+				</span>
+				<span>
+					@{
+						CheckAuthorizeAction.Instance.CheckPemission(controller, "Update");
+						if (CheckAuthorizeAction.Instance.Check)
+						{
+							<a href="@Url.Action("Update", new { Id = item.Id })">
+								<i class="ace-icon fa fa-pencil-square-o"></i>
+							</a>
+						}
+					}
+				</span>
+				@if (childItem.Any())
+				{
+					@Html.Action("Child", new { listChild = childItem, allFunction = allList})
+				}
+			</li>
+		}
+	</ul>
+}

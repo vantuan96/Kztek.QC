@@ -1,0 +1,132 @@
+@model List<Kztek.Model.Models.MenuFunction>
+
+@{
+    ViewBag.Title = "Hệ thống";
+    string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="page-header">
+    <h1>
+        Danh sách menu
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.Action("Actions", "Home", new { ActionName = "Create", ControllerName = controller })
+        @Html.Action("Actions", "Home", new { ActionName = "MultiDelete", ControllerName = controller })
+    </div>
+</div>
+
+<div class="hr hr-18 dotted hr-24"></div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="treeCustom" style="list-style-type:none">
+            @if (Model.Any())
+            {
+                var listParent = Model.Where(c => c.ParentId == "0").ToList();
+                if (listParent.Any())
+                {
+                    foreach (var item0 in listParent)
+                    {
+                        var strActive = item0.Active ? "" : "text-decoration:line-through";
+                        var child = Model.Where(c => c.ParentId == item0.Id).ToList();
+                        <li>
+                            <input type="checkbox" name="chkCheckBox" class="chkCheckBox ace" value="@item0.Id" />
+                            <span class="showButton lbl" style="@strActive">
+                                <strong><span>@item0.OrderNumber</span>. @item0.MenuName</strong>
+                            </span>
+                            <span>
+                                <a href="@Url.Action("Update", new {id = item0.Id})">
+                                    <i class="ace-icon fa fa-pencil-square-o"></i>
+                                </a>
+                            </span>
+                            @if (child.Any())
+                            {
+                                @Html.Action("MenuChilden", "MenuFunction", new { childList = child, AllList = Model })
+                            }
+
+                        </li>
+                    }
+                }
+
+            }
+        </ul>
+    </div><!-- /.span -->
+</div><!-- /.row -->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".showButton").click(function () {
+                var cmd = $(this);
+                cmd.parent().find('ul li span.showButton').parent().parent().toggle();
+            });
+
+            //Check box
+            $(".chkCheckBox").click(function () {
+                var cmd = $(this);
+                cmd.parent().find('ul li input[type=checkbox]').prop('checked', cmd.is(':checked'));
+            });
+
+            //Xóa nhiều bản ghi
+            $('.btnMultiDelete').click(function () {
+                var lstdeleteId = "";
+                $("input[name='chkCheckBox']").each(function () {
+                    var cmd = $(this);
+                    var id = cmd.prop("value");
+                    if ($(this).is(":checked")) {
+                        lstdeleteId = lstdeleteId + id + ",";
+                    }
+                });
+                if (confirm('Bạn chắc chắn muốn xóa bản ghi này?')) {
+                    //post danh sách ID
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Admin/MenuFunction/MutilDelete",
+                        data: "{'lstId':'" + lstdeleteId + "'}",
+                        dataType: "json",
+                        async: "false",
+                        success: function (data) {
+                            if (data.isSuccess) {
+                                toastr.success(data.Message);
+                                window.location.href = "/Admin/MenuFunction/Index";
+                            } else {
+                                toastr.error(data.Message);
+                            }
+                        }
+                    });
+                }
+            })
+            //Duyệt nhiều
+            $("#btnDuyet").click(function () {
+                var lstapproveId = "";
+                $("input[name='chkCheckBox']").each(function () {
+                    var id = $(this).prop("value");
+                    if ($(this).is(":checked")) {
+                        lstapproveId = lstapproveId + id + ",";
+                    }
+                });
+                var nhaptrangthai = $("#chonduyet").val();
+                //post danh sách ID
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: "/Admin/MenuFunction/Active",
+                    data: "{'lstId':'" + lstapproveId + "', 'nhaptrangthai':'" + nhaptrangthai + "'}",
+                    dataType: "json",
+                    async: "false",
+                    success: function (data) {
+                        if (data.isSuccess) {
+                            toastr.success(data.Message);
+                            window.location.href = "/Admin/MenuFunction/Index";
+                        } else {
+                            toastr.error(data.Message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

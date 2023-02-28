@@ -1,0 +1,106 @@
+﻿@using Kztek.Web.Attributes
+
+@model IEnumerable<Kztek.Model.Models.Role>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    ViewBag.Title = "Vai trò";
+    string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="page-header">
+    <h1>
+        Danh sách vai trò
+    </h1>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("Index", "Role", FormMethod.Get, new { id = "frmRole" }))
+    {
+        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 divboxmd">
+            <input type="text" name="key" value="" placeholder="Từ khóa..." class="form-control" />
+        </div>
+        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12 divboxmd">
+            @Html.Action("Actions", "Home", new { ActionName = "Search", ControllerName = controller })
+
+            @Html.Action("Actions", "Home", new { ActionName = "Index", ControllerName = controller })
+        </div>
+    }
+</div>
+
+<div class="hr hr-18 dotted hr-24"></div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.Action("Actions", "Home", new { ActionName = "Create", ControllerName = controller })
+    </div>
+</div>
+
+<div class="hr hr-18 dotted hr-24"></div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table id="simple-table" class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="center hidden-480">Id</th>
+                    <th class="center">Tên vai trò</th>
+                    <th class="center hidden-480">Mô tả</th>
+                    <th class="center hidden-480">Trạng thái</th>
+                    <th class="center">Xử lý</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-left hidden-480">
+                                @item.Id
+                            </td>
+
+                            <td class="text-left">
+                                @item.RoleName
+                            </td>
+
+                            <td class="text-left hidden-480">
+                                @item.Description
+                            </td>
+
+                            <td class="center hidden-480">
+                                @if (item.Active == true)
+                                {
+                                    <span class="label label-sm label-success">Kích hoạt</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-sm label-warning">Chưa kích hoạt</span>
+                                }
+                            </td>
+                            <td class="center">
+                                <div class="btn-group">
+                                    @Html.Action("Actions", "Home", new { ActionName = "Update", ControllerName = controller, id = item.Id })
+                                    @Html.Action("Actions", "Home", new { ActionName = "Delete", ControllerName = controller, id = item.Id })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div><!-- /.span -->
+</div><!-- /.row -->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            SearchSubmit("frmRole");
+
+            DeleteSubmit('/Admin/Role/Delete');
+        });
+    </script>
+    }

@@ -1,0 +1,53 @@
+﻿@using Kztek.Model.Models
+@using Kztek.Web.Attributes
+@model List<MainMenu>
+@{
+    var allList = (List<MainMenu>)ViewBag.allList;
+    string groupID = (string)ViewBag.GroupID;
+    string controller = this.ViewContext.RouteData.Values["controller"].ToString();
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model.OrderBy(n => n.Ordering).ToList())
+    {
+        var strUrl = item.Url;
+
+        switch (item.Target)
+        {
+            case "1":
+                break;
+            case "2":
+                strUrl = string.Format("{0}", !string.IsNullOrEmpty(item.NameUrl) ? Url.Action("Index", "Product", new { newcategory = item.NameUrl }) : item.Url);
+                break;
+            case "3":
+                strUrl = string.Format("{0}", !string.IsNullOrEmpty(item.NameUrl) ? Url.Action("Index", "Service", new { newcategory = item.NameUrl }) : item.Url);
+                break;
+            case "4":
+                strUrl = string.Format("{0}", !string.IsNullOrEmpty(item.NameUrl) ? Url.Action("Index", "News", new { newcategory = item.NameUrl }) : item.Url);
+                break;
+        }
+
+        var childItem = allList.Where(c => c.ParentId == item.Id).ToList();
+        if (childItem != null && childItem.Count > 0)
+        {
+            <li>
+                <a href="#">@item.Name</a>
+                <ul class="dropdown">
+                    @Html.Action("Child", new { listChild = childItem, allFunction = Model })
+                </ul>
+            </li>
+           
+        }
+        else
+        {
+            <li>
+                <a href="@strUrl">@item.Name</a>
+            </li>
+        }
+        
+    }
+
+}
+
+

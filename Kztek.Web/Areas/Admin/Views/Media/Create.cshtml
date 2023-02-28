@@ -1,0 +1,158 @@
+﻿@*AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Web.Core.Extensions
+@using Kztek.Model.Models
+@model Media
+@{
+    ViewBag.Title = "Thêm mới Quản lý đa phương tiện";
+    var _urlValue = (string)ViewBag.urlValue;
+}
+<div class="page-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</div>
+<div class="row">
+    @if (TempData["Success"] != null)
+    {
+        <strong style="color: green"> @TempData["Success"] </strong>
+    }
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Create", "Media", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmCreate" }))
+        {
+            @Html.ValidationMessage("", "", new { @class = "text-danger", @style = "font-size:18; " })
+            @Html.Hidden("SaveAndCountinue", false)
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Name)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Name, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(n => n.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Description) </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.Description, new { @class = "form-control", @rows = "3", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Description, "", new { @class = "" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Alt)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Alt, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Alt, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Url)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Url, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Url, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Path) </label>
+                <div class="col-sm-6 col-xs-12">
+                    <div class="col-sm-6" style="padding-left:0px !important">
+                        @Html.TextBoxFor(n => n.Path, new { @class = "form-control", @placeholder = "" })
+                    </div>
+                    <div class="col-sm-6" >
+                        <input type="file" name="PathFileUpload" value="" style="padding-top:5px;" />
+                    </div>
+
+                    
+                    @*@Html.ValidationMessageFor(n => n.Path, "", new { @class = "text-danger" })*@
+                    @if (Model != null && !string.IsNullOrWhiteSpace(Model.Path))
+                    {
+                        <img src="@Model.Path.ImagePathThumb(150,150)" style="max-width:150px;max-height:150px;" />
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Page)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(c => c.Page, new SelectList(ViewBag.Page, "ItemValue", "ItemText"), new { @class = "col-xs-12 col-sm-7" })
+                    @Html.ValidationMessageFor(c => c.Page, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Position)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(c => c.Position, new SelectList(ViewBag.Positions, "ItemValue", "ItemText"), new { @class = "col-xs-12 col-sm-7" })
+                    @Html.ValidationMessageFor(c => c.Position, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.MediaType)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.DropDownListFor(c => c.MediaType, new SelectList(ViewBag.Type, "ItemValue", "ItemText"), new { @class = "col-xs-12 col-sm-7" })
+                    @Html.ValidationMessageFor(c => c.MediaType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.TotalView)</label>
+                <div class="col-sm-2 col-xs-12">
+                    @Html.TextBoxFor(n => n.TotalView, new { @class = "form-control", @placeholder = "", @Value = "0" })
+                    @Html.ValidationMessageFor(n => n.TotalView, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Ordering)</label>
+                <div class="col-sm-2 col-xs-12">
+                    @Html.TextBoxFor(n => n.Ordering, new { @class = "form-control", @placeholder = "", @Value = "0" })
+                    @*@Html.ValidationMessageFor(n => n.Ordering, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Active) </label>
+                <div class="col-sm-4">
+                    <label class="line-height-250">
+                        @Html.CheckBoxFor(n => n.Active, new { @class = "ace", @checked = "true" })
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+
+            @Html.Action("Buttons", "Home", new { controller = "Media", action = "Create" })
+        }
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/editors/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/editors/ckfinder/ckfinder.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function () {
+			CKEDITOR.replaceClass = 'ckeditor';
+			$('#ac_85695777').addClass('open');
+			$('#ac_110443008').addClass('open active');
+			$('#Countinue').click(function() {
+			$('#SaveAndCountinue').val('true');
+				$('#frmCreate').submit();
+			});
+			$('#CountinueAndClose').click(function() {
+				$('#SaveAndCountinue').val('false');
+				$('#frmCreate').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '@_urlValue';
+			});
+		});
+    </script>
+    <script type="text/javascript">
+        CKEDITOR.replace("Description");
+    </script>
+}

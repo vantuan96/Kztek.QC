@@ -1,0 +1,123 @@
+﻿@model Kztek.Model.Models.MenuFunction
+
+@{
+    ViewBag.Title = "Create";
+}
+
+    <div class="page-header">
+        <h1>
+            Cập nhật menu
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            @using (Html.BeginForm("Update", "MenuFunction", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmUpdate" }))
+            {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Tên menu </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(n => n.MenuName, new { @class = "col-xs-12 col-sm-5", @placeholder = "Nhập tên menu" })
+                        @Html.ValidationMessageFor(n => n.MenuName, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(c => c.Id)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Tên controller </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(n => n.ControllerName, new { @class = "col-xs-12 col-sm-5", @placeholder = "Nhập tên controller" })
+                        @Html.ValidationMessageFor(n => n.ControllerName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Tên action </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(n => n.ActionName, new { @class = "col-xs-12 col-sm-5", @placeholder = "Nhập tên controller" })
+                        @Html.ValidationMessageFor(n => n.ActionName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Cấp cha </label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(n => n.ParentId, new SelectList(ViewBag.DDLMenu, "Id", "MenuName"), new { @class = "col-xs-12 col-sm-5" })
+                        @Html.ValidationMessageFor(n => n.ParentId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Loại </label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(n => n.MenuType, new SelectList(ViewBag.DDLMenuType, "ItemValue", "ItemText"), new { @class = "fontawesome-select col-xs-6 col-sm-3" })
+                        @Html.ValidationMessageFor(n => n.Icon, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Icon </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(n => n.Icon, new { @class = "col-xs-6 col-sm-3", @placeholder = "Icon" })
+                        @Html.ValidationMessageFor(n => n.Icon, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Số thứ tự </label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(n => n.OrderNumber, new { @class = "col-xs-12 col-sm-2", @placeholder = "Nhập số thứ tự" })
+                        @Html.ValidationMessageFor(n => n.OrderNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Kích hoạt </label>
+                    <div class="col-sm-8">
+                        <label class="line-height-250">
+                            @Html.CheckBoxFor(n => n.Active, new { @class = "ace" })
+                            <span class="lbl"></span>
+                        </label>
+                    </div>
+                </div>
+
+                @Html.Action("Buttons", "Home", new { controller = "MenuFunction", action = "Update", url = ViewBag.urlValue })
+            }
+        </div>
+    </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('#ac_hethong').addClass('open');
+            $('#ac_danhmuchethong').addClass('open active');
+            $('#CountinueAndClose').click(function() {
+				$('#frmUpdate').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '/Admin/MenuFunction/';
+			});
+            ////Chosen
+            //if (!ace.vars['touch']) {
+            //    $('.chosen-select').chosen({ allow_single_deselect: true });
+            //    //resize the chosen on window resize
+            //    $(window)
+            //    .off('resize.chosen')
+            //    .on('resize.chosen', function () {
+            //        $('.chosen-select').each(function () {
+            //            var $this = $(this);
+            //            $this.css({ 'width': $this.width() });
+            //        })
+            //    }).trigger('resize.chosen');
+            //    //resize chosen on sidebar collapse/expand
+            //    $(document).on('settings.ace.chosen', function (e, event_name, event_val) {
+            //        if (event_name != 'sidebar_collapsed') return;
+            //        $('.chosen-select').each(function () {
+            //            var $this = $(this);
+            //            $this.next().css({ 'width': $this.width() });
+            //        })
+            //    });
+            //}
+        });
+    </script>
+}

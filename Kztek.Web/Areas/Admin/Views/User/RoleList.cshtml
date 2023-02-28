@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Kztek.Model.Models.Role>
+
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <p><i class="ace-icon fa fa-caret-right"></i> @item.RoleName</p>
+    }
+}

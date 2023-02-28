@@ -1,0 +1,40 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Model.Models
+@using Kztek.Model.CustomModel
+@using Kztek.Web.Core.Extensions
+@model PageModel<Media>
+
+<div class="col-xs-12">
+    @Html.Raw(Html.TableFor<Media>
+        ().Columns(column =>
+        {
+            column.Expression(p => p.Id).Title("Id").tdWidth("10");
+            column.Expression(p => p.Name).Title("Name");
+            //column.Expression(p => p.Description).Title("Description").tdWidth("10");
+            //column.Expression(p => p.Alt).Title("Alt").tdWidth("10");
+            //column.Expression(p => p.Url).Title("Url").tdWidth("10");
+            column.Expression(p => p.Path).Title("Path").tdWidth("10");
+            column.Expression(p => p.Page).Title("Page").tdWidth("10");
+            column.Expression(p => p.Position).Title("Position").tdWidth("10");
+            //column.Expression(p => p.MediaType).Title("MediaType").tdWidth("10");
+            //column.Expression(p => p.TotalView).Title("TotalView").tdWidth("10");
+            //column.Expression(p => p.Ordering).Title("Ordering").tdWidth("10");
+            column.Expression(p => p.DateCreated).Title("DateCreated").tdWidth("15");
+            column.Expression(p => p.Active).Title("Active").tdWidth("15");
+        }).DataSource(Model.Data).ToHtmlUpdate("lpMedia", "table table-bordered table-hover", Url.Action("Update/", "Media",new { Id=string.Empty }), "", false)
+    )
+</div>
+<!--Pagging-->
+<div class="col-xs-12">
+    <div id="AjaxPaging">
+        @*GeneratePagingFooter*@
+        @Html.GeneratePagingFooterAjax(Model.TotalPage, Model.TotalItem, Model.PageIndex, Model.PageSize, "pagination", x => Url.Action("Index", "Media", new
+   {
+       page = x,
+       key = ViewBag.Key,
+       mediaPage = ViewBag.mediaPage ,
+         position =   ViewBag.position,
+
+        }))
+    </div>
+</div>

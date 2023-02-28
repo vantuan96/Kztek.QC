@@ -1,0 +1,22 @@
+﻿@{
+    var obj = ViewBag.ObjName;
+    var list = (List<string>)ViewBag.listMenu;
+}
+
+<ul class="breadcrumb">
+    <li>
+        <i class="ace-icon fa fa-home home-icon"></i>
+        <a href="/">Trang chủ</a>
+    </li>
+    @if (list.Any())
+    {
+        foreach (var item in list)
+        {
+            var a = item.Split(',');
+            <li>
+                @Html.ActionLink(a[0],"Index", a[1])
+            </li>
+        }
+    }
+    <li class="active">@obj</li>
+</ul><!-- /.breadcrumb -->

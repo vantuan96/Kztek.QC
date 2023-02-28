@@ -1,0 +1,75 @@
+﻿@* AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Web.Core.Extensions
+@using Kztek.Model.Models
+@model Contact
+@{
+ViewBag.Title = "Cập nhập Liên hệ";
+var _urlValue = (string)ViewBag.urlValue;
+}
+<div class="page-header">
+	<h1>
+		@ViewBag.Title
+		</h1>
+</div>
+<div class="row">
+	@if(TempData["Success"] != null)
+	{
+		<strong style = "color: green" > @TempData["Success"] </strong>
+	}
+</div>
+<div class="row">
+	<div class="col-xs-12">
+			@using(Html.BeginForm("Update", "Contact", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmUpdate" }))
+		{
+			@Html.ValidationMessage("", "", new { @class = "text-danger", @style = "font-size:18; " })
+			@Html.Hidden("SaveAndCountinue", false)
+		@Html.Hidden("urlValue", _urlValue)
+			@Html.HiddenFor(c => c.Id)
+			@Html.HiddenFor(c => c.DateCreated)
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.CustomerId)</label>
+				<div class="col-sm-6 col-xs-12">
+					@Html.TextBoxFor(n => n.CustomerId, new { @class = "form-control", @placeholder = "" })
+					@*@Html.ValidationMessageFor(n => n.CustomerId, "", new { @class = "text-danger" })*@
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Description) </label>
+				<div class="col-sm-6 col-xs-12">
+					@Html.TextAreaFor(n => n.Description, new { @class = "form-control",@rows="5", @placeholder = "" })
+					@*@Html.ValidationMessageFor(n => n.Description, "", new { @class = "" })*@
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.IPCustomer)</label>
+				<div class="col-sm-6 col-xs-12">
+					@Html.TextBoxFor(n => n.IPCustomer, new { @class = "form-control", @placeholder = "" })
+					@*@Html.ValidationMessageFor(n => n.IPCustomer, "", new { @class = "text-danger" })*@
+				</div>
+			</div>
+
+		@Html.Action("Buttons", "Home", new { controller = "Contact", action = "Update" })
+}
+</div>
+</div>
+@section scripts
+{
+<script src="~/Scripts/editors/ckeditor/ckeditor.js"></script>
+<script src="~/Scripts/editors/ckfinder/ckfinder.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+			CKEDITOR.replaceClass = 'ckeditor';
+			$('#ac_85695777').addClass('open');
+			$('#ac_110443008').addClass('open active');
+			$('#CountinueAndClose').click(function() {
+				$('#SaveAndCountinue').val('false');
+				$('#frmUpdate').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '@_urlValue';
+			});
+	});
+</script>
+}

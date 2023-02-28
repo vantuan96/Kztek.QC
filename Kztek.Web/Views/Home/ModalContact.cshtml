@@ -1,0 +1,78 @@
+﻿
+<style>
+    .modal-title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 28px;
+       
+    }
+
+    /*.modal-header {
+        background-color: #bca858;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }*/
+</style>
+
+<!-- The Modal feedback-->
+<div class="modal" id="ModalContact">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header" >
+                <h4 class="modal-title">                 
+                    Nhập thông tin liên hệ              
+                </h4>
+
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="boxContact">
+                <form action="#" method="post" class="akame-contact-form border-0 p-0" id="frmContact">
+                    <div class="row">
+                        <div class="col-12">
+                            <span style="display:none;color:red;" id="name">Vui lòng nhập họ tên</span>
+                            <input type="text" name="txtName" class="form-control mb-30" placeholder="Họ tên">
+                        </div>
+                        <div class="col-12">
+                            <span style="display:none;color:red;" id="phone1">Vui lòng nhập số điện thoại</span>
+                            <span style="display:none;color:red;" id="phone2">Số điện thoại không đúng định dạng</span>
+                            <input type="text" name="txtPhone" class="form-control mb-30" placeholder="Số điện thoại">
+                        </div>
+                        <div class="col-12">
+                            <span style="display:none;color:red;" id="email">Vui lòng nhập Email</span>
+                            <input type="email" name="txtEmail" class="form-control mb-30" placeholder="Email">
+                        </div>
+                        <div class="col-12">
+                            <textarea name="txtNote" class="form-control mb-30" placeholder="Mô tả"></textarea>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn akame-btn btn-3 mt-15 active" id="btnSave">Gửi</button>
+                            <button type="button" class="btn akame-btn btn-3 mt-15 active" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </form>
+                @*<div class="kz-tttvbox">
+                    <form role="form" id="frmContact">
+                        <ul class="kz-ttvul">
+                            <li><input type="text" class="form-control" name="txtName" placeholder="Họ tên"></li>
+                            <li><input type="text" class="form-control" name="txtPhone" placeholder="Số điện thoại"></li>
+                            <li style="display:none;color:red;text-align:left;" id="Phone"><p>Số điện thoại không đúng định dạng</p></li>
+                            <li><input type="text" class="form-control" name="txtEmail" placeholder="Email"></li>
+                            <li><textarea class="form-control" name="txtNote" rows="4" placeholder="Nội dung góp ý"></textarea></li>
+                            <li style="text-align:right;">
+                                <button style="background:#4b2c92;" type="button" class="ms-bnsbtn" id="btnSave">Gửi</button>
+                                <button style="width:130px;background:#4b2c92;" type="button" class="ms-bnsbtn" data-dismiss="modal">Đóng</button>
+                            </li>
+                        </ul>
+                    </form>
+
+                </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

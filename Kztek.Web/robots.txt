@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /bin/
+Disallow: /Admin/
+Disallow: /Areas/
+Disallow: /Templates/
+Disallow: /Content/
+
+

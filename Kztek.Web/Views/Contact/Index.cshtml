@@ -1,0 +1,112 @@
+﻿@using Kztek.Model.Models
+@using Kztek.Model.CustomModel
+@model ContactView
+@{
+    ViewBag.Title = "Liên hệ";
+}
+
+
+<!-- Header Area End -->
+<!-- Google Maps Start -->
+<div class="akame-google-maps-area">
+    <iframe src="@Model.Info.LinkGoogleMap" allowfullscreen></iframe>
+</div>
+
+<!-- Google Maps End -->
+<!-- Contact Information Area Start -->
+<section class="contact-information-area section-padding-80-0">
+    <div class="container">
+        <div class="row">
+            <!-- Single Contact Information -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-contact-information mb-80">
+                    <i class="icon_phone"></i>
+                    <h4>Phone</h4>
+                    <p>@Model.Info.Phone</p>
+                </div>
+            </div>
+
+            <!-- Single Contact Information -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-contact-information mb-80">
+                    <i class="icon_pin"></i>
+                    <h4>Address</h4>
+                    <p>@Model.Info.CompanyInfo</p>
+                </div>
+            </div>
+
+            <!-- Single Contact Information -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-contact-information mb-80">
+                    <i class="icon_clock"></i>
+                    <h4>WebSite</h4>
+                    <p>@Model.Info.WebsiteName</p>
+                </div>
+            </div>
+
+            <!-- Single Contact Information -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-contact-information mb-80">
+                    <i class="icon_mail"></i>
+                    <h4>Email</h4>
+                    <p>@Model.Info.EmailSystem</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Information Area End -->
+<!-- Contact Area Start -->
+<section class="akame-contact-area bg-gray section-padding-80">
+    <div class="container">
+        <div class="row">
+            <!-- Section Heading -->
+            <div class="col-12">
+                <div class="section-heading text-center">
+                    <h2>Hãy Để Lại Tin Nhắn</h2>
+                    <p>Chúng tôi sẽ liên hệ ngay với bạn</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Form -->
+                <form action="#" method="post" class="akame-contact-form border-0 p-0" id="boxContact">
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <div>
+                                <span style="display:none;color:red;" id="name">Vui lòng nhập họ tên</span>
+                                <input type="text" name="txtName" class="form-control mb-30" placeholder="Họ tên">
+                            </div>
+                            <div>
+                                <span style="display:none;color:red;" id="phone1">Vui lòng nhập số điện thoại</span>
+                                <span style="display:none;color:red;" id="phone2">Số điện thoại không đúng định dạng</span>
+                                <input type="text" name="txtPhone" class="form-control mb-30" placeholder="Số điện thoại">
+                            </div>
+                            <div>
+                                <span style="display:none;color:red;" id="email">Vui lòng nhập Email</span>
+                                <input type="email" name="txtEmail" class="form-control mb-30" placeholder="Email">
+                            </div>
+                        </div>
+                      
+                        <div class="col-sm-6" style="">
+                            @Html.TextArea("txtNote", new { @class = "form-control", @rows = "8", @placeholder = "Hãy để lại tin nhắn ...", @style = "height: auto !important" })
+                            @*<textarea name="message" class="form-control mb-30" placeholder="Start the discussion..."></textarea>*@
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" id="btnSave" class="btn akame-btn btn-3 mt-15 active">Gửi</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Contact Area End -->
+
+@section scripts{
+    <script src="~/Scripts/Ext/Contact.js"></script>
+}

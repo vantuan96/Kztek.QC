@@ -1,0 +1,146 @@
+﻿@using Kztek.Web.Core.Extensions
+
+@model Kztek.Model.Models.User
+
+@{
+    ViewBag.Title = "Cập nhật người dùng";
+
+    string selected = (string)ViewBag.Selected;
+    var currentUser = Kztek.Web.Core.Functions.GetCurrentUser.GetUser();
+
+}
+
+<div class="page-header">
+    <h1>
+        @ViewBag.Title
+    </h1>
+</div>
+<div class="row">
+    @if (TempData["Success"] != null)
+    {
+        <strong style="color:green">@TempData["Success"]</strong>
+    }
+    <strong style="color:red">@ViewBag.Error</strong>
+</div>
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        @using (Html.BeginForm("Update", "User", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmUpdateUser" }))
+        {
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Tài khoản đăng nhập <span style="color:red">*</span></label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Username, new { @class = "form-control", @placeholder = "Tài khoản đăng nhập" })
+                    @Html.ValidationMessageFor(n => n.Username, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(n => n.Id)
+                    @Html.Hidden("rolevalues", "")
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Mật khẩu </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBox("pass", "", new { @class = "form-control", @type = "password" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Nhật lại mật khẩu </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBox("repass", "", new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessage("repass", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            if (currentUser.Admin)
+            {
+                <div class="form-group">
+                    <label class="col-sm-4 control-label no-padding-right"> Là Admin </label>
+                    <div class="col-sm-6">
+                        <label class="line-height-250">
+                            @Html.CheckBoxFor(n => n.Admin, new { @class = "ace", @checked = "true" })
+                            <span class="lbl"></span>
+                        </label>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Kích hoạt </label>
+                <div class="col-sm-6">
+                    <label class="line-height-250">
+                        @Html.CheckBoxFor(n => n.Active, new { @class = "ace", @checked = "true" })
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label no-padding-right"> Ảnh đại diện </label>
+                <div class="col-sm-6">
+                    <input type="file" name="FileUpload" id="FileUpload" />
+                </div>
+                <div class="col-sm-offset-4 col-sm-6">
+                    @if (!string.IsNullOrWhiteSpace(Model.UserAvatar))
+                    {
+                        <img src="@Model.UserAvatar.ImagePathThumb(150,150)" alt="@Model.UserAvatar" />
+                    }
+                </div>
+            </div>
+
+            @Html.Action("Buttons", "Home", new { controller = "User", action = "Update", url = ViewBag.urlValue })
+        }
+    </div>
+    <div class="col-md-4 col-xs-12" id="boxRole">
+        <h3 class="header smaller lighter blue">Danh sách quyền hạn</h3>
+        @Html.Action("RoleListChoice", "User", new { roles = selected })
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#CountinueAndClose').click(function() {
+                $('#frmUpdateUser').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '/Admin/User';
+			});
+
+            $("#frmUpdateUser").submit(function () {
+                var str = "";
+                $("input[name='chkCheckBox']").each(function () {
+                    var cmd = $(this);
+                    var id = cmd.prop("value");
+                    if ($(this).is(":checked")) {
+                        str = str + id + ",";
+                    }
+                });
+                $("#rolevalues").val(str);
+            });
+
+            $("#boxGroupList").find("#ddlGroupList").change(function () {
+                var str = '';
+                $('#boxGroupList ul.multiselect-container li.active').each(function () {
+                    var cmd = $(this);
+                    str += cmd.find('input[type=checkbox]').val() + ',';
+                });
+                $('#hidGroupList').val(str);
+            });
+
+            var cmdAdmin = $("#Admin").is(':checked');
+            if (cmdAdmin) {
+                $("#boxRole").hide();
+            } else {
+                $("#boxRole").show();
+            }
+
+            $("#Admin").click(function () {
+                var cmd = $(this).is(':checked');
+                if (cmd) {
+                    $("#boxRole").hide();
+                    SY_UserController.CheckGroup();
+
+                } else {
+                    $("#boxRole").show();
+                    SY_UserController.UnCheckGroup();
+                }
+            });
+        });
+    </script>
+}

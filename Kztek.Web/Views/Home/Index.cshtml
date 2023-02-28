@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+
+}
+
+@Html.Action("Banner", "Home")
+
+<!-- Border -->
+<div class="container">
+    <div class="border-top mt-3"></div>
+</div>
+@Html.Action("Product", "Home")
+@Html.Action("Service", "Home")
+@Html.Action("Choose", "Home")
+@Html.Action("Work", "Home")
+@Html.Action("Expert", "Home")
+<!-- Border -->
+<div class="container">
+    <div class="border-top mt-3"></div>
+</div>
+@Html.Action("Blog", "Home")
+@Html.Action("Contact", "Home")
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".page_home").addClass("active");
+
+
+        });
+    </script>
+}

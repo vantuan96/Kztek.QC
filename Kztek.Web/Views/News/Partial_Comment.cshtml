@@ -1,0 +1,25 @@
+﻿
+<div class="akame-contact-form mt-50">
+    <h4 class="mb-5">Bình luận:</h4>
+
+    <!-- Form -->
+    <form action="#" method="post" id="frmComment">
+        <div class="row">
+            <div class="col-12">
+                <span style="display:none;color:red;" id="cm_note">Vui lòng nhập ý kiến của bạn</span>
+                <textarea name="txtNote" class="form-control mb-30" placeholder="Nội dung"></textarea>
+            </div>
+            <div class="col-12">
+                <span style="display:none;color:red;" id="cm_name">Vui lòng nhập họ tên</span>
+                <input type="text" name="txtName" class="form-control mb-30" placeholder="Họ tên">
+            </div>
+            <div class="col-12">
+                <span style="display:none;color:red;" id="cm_email">Vui lòng nhập Email</span>
+                <input type="email" name="txtEmail" class="form-control mb-30" placeholder="Email">
+            </div>
+            <div class="col-12">
+                <button type="button" id="btnSaveComment" class="btn akame-btn btn-3 mt-15" idata="@ViewBag.ID">Đăng bình luận</button>
+            </div>
+        </div>
+    </form>
+</div>

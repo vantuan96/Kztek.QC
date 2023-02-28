@@ -1,0 +1,200 @@
+﻿@*AUTO GENCODE SYSTEM - 04/06/2019 15:12*@
+@using Kztek.Web.Core.Extensions
+@using Kztek.Model.Models
+@model News
+@{
+	ViewBag.Title = "Thêm mới Tin bài";
+	var _urlValue = (string)ViewBag.urlValue;
+}
+<div class="page-header">
+	<h1>
+		@ViewBag.Title
+	</h1>
+</div>
+<div class="row">
+	@if(TempData["Success"] != null)
+	{
+		<strong style = "color: green" > @TempData["Success"] </strong>
+	}
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Create", "News", FormMethod.Post, new { encType = "multipart/form-data", @class = "form-horizontal", @role = "form", @id = "frmCreate" }))
+        {
+            @Html.ValidationMessage("", "", new { @class = "text-danger", @style = "font-size:18; " })
+            @Html.Hidden("SaveAndCountinue", false)
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Chọn @Html.LabelFor(m => m.NewsCategoryId) </label>
+                <div class="col-sm-4 col-xs-12">
+                    @Html.DropDownListFor(n => n.NewsCategoryId, new SelectList(ViewBag.NewsCategoryIdDDLtree, "ItemValue", "ItemText"), new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Name)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.Name, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(n => n.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.NameUrl)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.NameUrl, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.NameUrl, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Summary) </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.Summary, new { @class = "form-control", @rows = "5", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Summary, "", new { @class = "" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.Description) </label>
+                <div class="col-sm-9 col-xs-12">
+                    @Html.TextAreaFor(n => n.Description, new { @class = "form-control ckeditor", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.Description, "", new { @class = "" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.MetaTitle)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.MetaTitle, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.MetaTitle, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.MetaDesc) </label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextAreaFor(n => n.MetaDesc, new { @class = "form-control", @rows = "5", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.MetaDesc, "", new { @class = "" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.MetaKeywork)</label>
+                <div class="col-sm-6 col-xs-12">
+                    @Html.TextBoxFor(n => n.MetaKeywork, new { @class = "form-control", @placeholder = "" })
+                    @*@Html.ValidationMessageFor(n => n.MetaKeywork, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">@Html.LabelFor(m => m.CoverPath)</label>
+                <div class="col-sm-6 col-xs-12 center btn-group">
+                    @Html.TextBoxFor(c => c.CoverPath, new { @class = "form-control" })
+                </div>
+                <input type="button" id="Browse" value="Browse..." class="btn btn-default" style="height:33px; line-height:15px;" onclick="OpenCoverPath()">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-4"></label>
+                <div class="col-sm-7">
+                    <img id="blah_CoverPath" src="@string.Format("{0}",Model!=null && !string.IsNullOrWhiteSpace(Model.CoverPath)?Model.CoverPath:"")" alt="" style="max-width:200px" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">Ảnh chi tiết</label>
+                <div class="col-sm-6 col-xs-12 center btn-group">
+                    @Html.TextBoxFor(c => c.DetailPath, new { @class = "form-control" })
+                </div>
+                <input type="button" id="Browse" value="Browse..." class="btn btn-default" style="height:33px; line-height:15px;" onclick="OpenDetailPath()">
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right" for="form-field-4"></label>
+                <div class="col-sm-7">
+                    <img id="blah_DetailPath" src="@string.Format("{0}",Model!=null && !string.IsNullOrWhiteSpace(Model.DetailPath)?Model.DetailPath:"")" alt="" style="max-width:200px" />
+                </div>
+            </div>
+            @*<div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.TotalView)</label>
+                <div class="col-sm-2 col-xs-12">
+                    @Html.TextBoxFor(n => n.TotalView, new { @class = "form-control", @placeholder = "", @Value = "0" })
+                    @Html.ValidationMessageFor(n => n.TotalView, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.NewsType)</label>
+                <div class="col-sm-4">
+                    <label class="line-height-250">
+                        @Html.CheckBox("hot", new { @class = "ace", @checked = "true", @style = "opacity: 1;" })
+                        <span class="lbl"></span>
+                        @Html.HiddenFor(n => n.NewsType, new { @class = "form-control", @placeholder = "", @Value = "" })
+                    </label>
+                </div>
+                @*<div class="col-sm-2 col-xs-12">
+                    <input type="checkbox" name="hot" class="ace" checked style="opacity: 1;">
+                    @Html.TextBoxFor(n => n.NewsType, new { @class = "form-control", @placeholder = "", @Value = "0" })
+                    @Html.ValidationMessageFor(n => n.NewsType, "", new { @class = "text-danger" })
+                </div>*@
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> @Html.LabelFor(m => m.Active) </label>
+                <div class="col-sm-4">
+                    <label class="line-height-250">
+                        @Html.CheckBoxFor(n => n.Active, new { @class = "ace", @checked = "true" })
+                        <span class="lbl"></span>
+                    </label>
+                </div>
+            </div>
+
+            @Html.Action("Buttons", "Home", new { controller = "News", action = "Create" })
+        }
+    </div>
+</div>
+@section scripts
+{
+	<script src="~/Scripts/editors/ckeditor/ckeditor.js"></script>
+	<script src="~/Scripts/editors/ckfinder/ckfinder.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			CKEDITOR.replaceClass = 'ckeditor';
+			$('#ac_85695777').addClass('open');
+			$('#ac_110443008').addClass('open active');
+			$('#Countinue').click(function() {
+			$('#SaveAndCountinue').val('true');
+				$('#frmCreate').submit();
+			});
+			$('#CountinueAndClose').click(function() {
+                $('#SaveAndCountinue').val('false');
+                if ($("input[name='hot']").val() == true) {
+                    $('#NewsType').val('1');
+                }
+                else {
+                    $('#NewsType').val('0');
+                }
+				$('#frmCreate').submit();
+			});
+			$('#btnBackToHome').click(function() {
+				location.href = '@_urlValue';
+			});
+		});
+</script>
+<script>
+	function OpenCoverPath() {
+		var finder = new CKFinder();
+		finder.selectActionFunction = function (fileUrl) {
+		$('#CoverPath').val(fileUrl);
+		$('#blah_CoverPath').css('display', 'block').attr('src', fileUrl).attr('width', 200);
+		};
+		finder.popup();
+    }
+    function OpenDetailPath() {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (fileUrl) {
+            $('#DetailPath').val(fileUrl);
+            $('#blah_DetailPath').css('display', 'block').attr('src', fileUrl).attr('width', 200);
+        };
+        finder.popup();
+    }
+</script>
+}

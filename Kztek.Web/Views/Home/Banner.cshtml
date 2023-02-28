@@ -1,0 +1,35 @@
+﻿@model List<Kztek.Model.Models.Media>
+<!-- Welcome Area Start -->
+
+@if (Model != null && Model.Count > 0)
+{
+    <section class="welcome-area">
+        <div class="welcome-slides owl-carousel">
+            @foreach (var item in Model)
+            {
+                <!-- Single Welcome Slide -->
+                <div class="single-welcome-slide bg-img" style="background-image: url(@item.Path);">
+                    <!-- Welcome Content -->
+                    <div class="welcome-content h-100">
+                        <div class="container h-100">
+                            <div class="row h-100 align-items-center">
+                                <!-- Welcome Text -->
+                                <div class="col-12 col-md-9 col-lg-6">
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        @Html.Raw(item.Description)
+                                    }
+            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+
+
+
+                </div>
+            </section>
+            <!-- Welcome Area End -->
+}
+   

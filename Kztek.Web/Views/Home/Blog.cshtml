@@ -1,0 +1,50 @@
+﻿@model List<Kztek.Model.Models.News>
+    @{ 
+       var listCate = (List<Kztek.Model.Models.NewsCategory>)ViewBag.ListCate;
+    }
+<!-- Blog Area Start -->
+@if (Model != null && Model.Count > 0)
+{
+    <section class="akame-blog-area section-padding-80-0 clearfix">
+        <div class="container">
+            <div class="row">
+                <!-- Section Heading -->
+                <div class="col-12">
+                    <div class="section-heading text-center">
+                        <h2>Tin mới nhất</h2>
+                        @*<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                @foreach (var item in Model)
+                {
+                    var objCate = listCate.FirstOrDefault(n => n.Id == item.NewsCategoryId);
+                    <!-- Single Post Area -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="single-post-area mb-80 wow fadeInUp" data-wow-delay="200ms">
+                            <div class="post-thumbnail">
+                                <a href="@Url.Action("Detail", "News", new { title = item.NameUrl, newcategory = (objCate != null ? objCate.NameUrl : "")})"><img src="@item.CoverPath" alt=""></a>
+                            </div>
+                            <div class="post-content">
+                                <a href="@Url.Action("Detail", "News", new { title = item.NameUrl, newcategory = (Model != null ? objCate.NameUrl : "")})" class="post-title"> @item.Name</a>
+                                <div class="post-meta">
+                                    <a href="#" class="post-date"><i class="icon_clock_alt"></i> @item.DateCreated.ToString("dd/MM/yyyy")</a>
+                                    @*<a href="#" class="post-comments"><i class="icon_chat_alt"></i> 10</a>*@
+                                </div>
+                                <p>@item.Summary</p>
+                            </div>
+                        </div>
+                    </div>
+                
+                }
+
+
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Blog Area End -->
